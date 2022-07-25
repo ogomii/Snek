@@ -1,4 +1,5 @@
 import pygame as pg
+from MouseActions import MouseActions
 
 
 if __name__ == "__main__":
@@ -12,15 +13,16 @@ if __name__ == "__main__":
     background.fill((170, 238, 187))
 
     if pg.font:
-        font = pg.font.Font(None, 64)
+        font = pg.font.SysFont('Arial', 64)
         text = font.render("Snek", True, (10, 10, 10))
         textpos = text.get_rect(centerx=background.get_width() / 2, y=10)
         background.blit(text, textpos)
     
     screen.blit(background, (0, 0))
     pg.display.flip()
-
     clock = pg.time.Clock()
+
+    mouse = MouseActions()
 
     keepGameRunning = True
     while keepGameRunning:
@@ -30,5 +32,13 @@ if __name__ == "__main__":
         for event in pg.event.get():
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 keepGameRunning = False
+
+        mousePosition = pg.mouse.get_pos()
+        mouse.drawButton1(screen, width, height, mousePosition)
+        mouse.drawButton2(screen, width, height, mousePosition)
+        
+        pg.display.update()
+
+
     
     pg.quit()
