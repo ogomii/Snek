@@ -1,14 +1,13 @@
 import pygame as pg
-from MouseActions import MouseActions
-
+from StateMachine import StateMachine
+import config
 
 if __name__ == "__main__":
     pg.init()
-    size = width, height = 1280, 720
 
-    screen = pg.display.set_mode(size)
+    screen = pg.display.set_mode(config.size)
 
-    background = pg.Surface(size)
+    background = pg.Surface(config.size)
     background = background.convert()
     background.fill((170, 238, 187))
 
@@ -22,7 +21,7 @@ if __name__ == "__main__":
     pg.display.flip()
     clock = pg.time.Clock()
 
-    mouse = MouseActions()
+    stateMachine = StateMachine(screen)
 
     keepGameRunning = True
     while keepGameRunning:
@@ -32,11 +31,11 @@ if __name__ == "__main__":
         for event in pg.event.get():
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 keepGameRunning = False
+            if event.type == pg.MOUSEBUTTONDOWN:
+                stateMachine.setState(config.State.playState) 
 
-        mousePosition = pg.mouse.get_pos()
-        mouse.drawButton1(screen, width, height, mousePosition)
-        mouse.drawButton2(screen, width, height, mousePosition)
-        
+        stateMachine.runState()
+
         pg.display.update()
 
 

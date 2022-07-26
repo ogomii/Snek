@@ -1,15 +1,23 @@
-from matplotlib.colors import LightSource
 import pygame as pg
+import config
+from config import State
 
 lightBlue = (50, 168, 166)
 darkBlue = (50 ,131, 168)
 
 class MouseActions:
 
-    def __init__(self):
+    def __init__(self, screen):
+        self.screen = screen
         self.font = pg.font.SysFont('Arial', 55)
         self.button2Text = self.font.render('PLAY', True, (0,0,120))
         self.button1Text = self.font.render('HCA', True, (0,0,120))
+    
+    def run(self):
+        mousePosition = pg.mouse.get_pos()
+        self.drawButton1(self.screen, config.width, config.height, mousePosition)
+        self.drawButton2(self.screen, config.width, config.height, mousePosition)
+        return State.chooseState                
 
     def drawButton1(self, screen, width, height, mousePosition) -> None:
         if width/2 - 280 <= mousePosition[0] <= width/2 - 40 and height/2 <= mousePosition[1] <= height/2 + 80:
