@@ -2,6 +2,7 @@ import abc
 
 
 class State:
+    initState = 0
     choiceState = 1
     playState = 2
 

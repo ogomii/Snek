@@ -1,5 +1,6 @@
 import pygame as pg
-import config
+import logging
+from config import *
 from .StateInterface import StateInterface, State
 
 lightBlue = (50, 168, 166)
@@ -8,6 +9,7 @@ darkBlue = (50 ,131, 168)
 class ChoiceState(StateInterface):
 
     def __init__(self, screen):
+        logging.info("choice state init")
         self.screen = screen
         self.font = pg.font.SysFont('Arial', 55)
         self.button2Text = self.font.render('PLAY', True, (0,0,120))
@@ -15,8 +17,8 @@ class ChoiceState(StateInterface):
     
     def run(self):
         mousePosition = pg.mouse.get_pos()
-        self.drawButton1(self.screen, config.width, config.height, mousePosition)
-        self.drawButton2(self.screen, config.width, config.height, mousePosition)
+        self.drawButton1(self.screen, width, height, mousePosition)
+        self.drawButton2(self.screen, width, height, mousePosition)
         return State.choiceState                
 
     def drawButton1(self, screen, width, height, mousePosition) -> None:
