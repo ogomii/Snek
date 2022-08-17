@@ -1,5 +1,5 @@
 import pygame as pg
-from StateMachine import StateMachine
+from StateMachine.StateMachine import StateMachine, State
 import config
 
 if __name__ == "__main__":
@@ -32,7 +32,7 @@ if __name__ == "__main__":
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 keepGameRunning = False
             if event.type == pg.MOUSEBUTTONDOWN:
-                stateMachine.setState(config.State.playState) 
+                stateMachine.setState(State.playState) 
 
         stateMachine.runState()
 

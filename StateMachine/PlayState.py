@@ -1,6 +1,6 @@
-from config import State
+from .StateInterface import StateInterface, State
 
-class Play:
+class PlayState(StateInterface):
 
     def __init__(self,screen):
         self.screen = screen

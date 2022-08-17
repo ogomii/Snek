@@ -1,11 +1,11 @@
 import pygame as pg
 import config
-from config import State
+from .StateInterface import StateInterface, State
 
 lightBlue = (50, 168, 166)
 darkBlue = (50 ,131, 168)
 
-class MouseActions:
+class ChoiceState(StateInterface):
 
     def __init__(self, screen):
         self.screen = screen
@@ -17,7 +17,7 @@ class MouseActions:
         mousePosition = pg.mouse.get_pos()
         self.drawButton1(self.screen, config.width, config.height, mousePosition)
         self.drawButton2(self.screen, config.width, config.height, mousePosition)
-        return State.chooseState                
+        return State.choiceState                
 
     def drawButton1(self, screen, width, height, mousePosition) -> None:
         if width/2 - 280 <= mousePosition[0] <= width/2 - 40 and height/2 <= mousePosition[1] <= height/2 + 80:
