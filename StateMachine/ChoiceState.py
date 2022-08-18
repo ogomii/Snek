@@ -2,6 +2,7 @@ import pygame as pg
 import logging
 from config import *
 from .StateInterface import StateInterface, State
+from MousePossitionCalculator import *
 
 lightBlue = (50, 168, 166)
 darkBlue = (50 ,131, 168)
@@ -22,7 +23,7 @@ class ChoiceState(StateInterface):
         return State.choiceState                
 
     def drawButton1(self, screen, width, height, mousePosition) -> None:
-        if width/2 - 280 <= mousePosition[0] <= width/2 - 40 and height/2 <= mousePosition[1] <= height/2 + 80:
+        if isMouseOnHamiltonButton(mousePosition):
             pg.draw.rect(screen, darkBlue, [width/2 - 280, height/2, 240, 80])
         else:
             pg.draw.rect(screen, lightBlue, [width/2 - 280, height/2, 240, 80])
@@ -30,7 +31,7 @@ class ChoiceState(StateInterface):
 
 
     def drawButton2(self, screen, width, height, mousePosition):
-        if width/2 + 40 <= mousePosition[0] <= width/2 + 280 and height/2 <= mousePosition[1] <= height/2 + 80:
+        if isMouseOnPlayButton(mousePosition):
             pg.draw.rect(screen, darkBlue, [width/2 + 40, height/2, 240, 80])
         else:
             pg.draw.rect(screen, lightBlue, [width/2 + 40, height/2, 240, 80])

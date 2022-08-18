@@ -4,7 +4,8 @@ import abc
 class State:
     initState = 0
     choiceState = 1
-    playState = 2
+    hamiltonState = 2
+    playState = 3
 
 
 class StateInterface(abc.ABC):

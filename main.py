@@ -1,6 +1,18 @@
 import pygame as pg
 from StateMachine.StateMachine import StateMachine, State
-import config
+from config import *
+
+
+def eventsHandling(stateMachine):
+    keepGameRunning = True
+    for event in pg.event.get():
+        if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+            keepGameRunning = False
+        if event.type == pg.MOUSEBUTTONDOWN:
+            stateMachine.setStateHamiltonOrPlay()
+
+    return keepGameRunning
+
 
 if __name__ == "__main__":
 
@@ -10,16 +22,12 @@ if __name__ == "__main__":
     keepGameRunning = True
     while keepGameRunning:
 
-        for event in pg.event.get():
-            if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                keepGameRunning = False
-            if event.type == pg.MOUSEBUTTONDOWN:
-                stateMachine.setState(State.playState) 
+        keepGameRunning = eventsHandling(stateMachine)
 
         stateMachine.runState()
 
         pg.display.update()
 
 
-    
     pg.quit()
+
