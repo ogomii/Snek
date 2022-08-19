@@ -1,6 +1,8 @@
+from asyncio import current_task
+from threading import currentThread
 import pygame as pg
 from config import *
-from .StateInterface import State
+from .StateInterface import State, StateInterface
 from .ChoiceState import ChoiceState
 from .PlayState import PlayState
 from .InitState import InitState
@@ -12,24 +14,21 @@ class StateMachine:
 
     def __init__(self):
         screen = pg.display.set_mode(size)
+
+        self.StateObjects = []
+        for stateClass in StateInterface.__subclasses__():
+            self.StateObjects.append(stateClass(screen))
+
         self.currentState = State.initState
-        self.initState = InitState(screen)
-        self.choiceState = ChoiceState(screen)
-        self.playState = PlayState(screen)
-        self.hamiltonState = HamiltonSate(screen)
         self.runState()
 
     def runState(self):
         stateToRun = None
 
-        if self.currentState == State.initState:
-            stateToRun = self.initState
-        elif self.currentState == State.choiceState:
-           stateToRun = self.choiceState 
-        elif self.currentState == State.playState:
-            stateToRun = self.playState
-        elif self.currentState == State.hamiltonState:
-            stateToRun = self.hamiltonState
+        for stateObject in self.StateObjects:
+            if stateObject.isState(self.currentState):
+                stateToRun = stateObject
+                break
 
         self.currentState = stateToRun.run()
     

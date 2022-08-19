@@ -13,3 +13,7 @@ class StateInterface(abc.ABC):
     @abc.abstractmethod
     def run(self) -> State:
         pass
+
+    @abc.abstractmethod
+    def isState(self, currentState) -> bool:
+        pass

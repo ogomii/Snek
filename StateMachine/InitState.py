@@ -13,6 +13,9 @@ class InitState(StateInterface):
         clock = pg.time.Clock()
         clock.tick(60)
 
+    def isState(self, currentState) -> bool:
+        return currentState == State.initState
+
     def run(self):
 
         background = pg.Surface(size)

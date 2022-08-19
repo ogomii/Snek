@@ -15,6 +15,9 @@ class ChoiceState(StateInterface):
         self.font = pg.font.SysFont('Arial', 55)
         self.button2Text = self.font.render('PLAY', True, (0,0,120))
         self.button1Text = self.font.render('HCA', True, (0,0,120))
+
+    def isState(self, currentState) -> bool:
+        return currentState == State.choiceState
     
     def run(self):
         mousePosition = pg.mouse.get_pos()
