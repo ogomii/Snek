@@ -1,29 +1,20 @@
+from re import T
 import pygame as pg
-from StateMachine.StateMachine import StateMachine, State
 from config import *
-
-
-def eventsHandling(stateMachine):
-    keepGameRunning = True
-    for event in pg.event.get():
-        if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-            keepGameRunning = False
-        if event.type == pg.MOUSEBUTTONDOWN:
-            stateMachine.setStateHamiltonOrPlay()
-
-    return keepGameRunning
+from StateMachine.StateMachine import StateMachine
+from EventHandler.EventHandler import EventHandler
 
 
 if __name__ == "__main__":
 
     pg.init()
     stateMachine = StateMachine()
+    eventHandler = EventHandler(stateMachine)
 
     keepGameRunning = True
     while keepGameRunning:
 
-        keepGameRunning = eventsHandling(stateMachine)
-
+        keepGameRunning = eventHandler.handleEvents()
         stateMachine.runState()
 
         pg.display.update()
