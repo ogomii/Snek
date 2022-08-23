@@ -24,7 +24,7 @@ class InitState(StateInterface):
 
         if pg.font:
             font = pg.font.SysFont('Arial', 64)
-            text = font.render("Snek", True, (10, 10, 10))
+            text = font.render("Snek", True, Color.black)
             textpos = text.get_rect(centerx=background.get_width() / 2, y=10)
             background.blit(text, textpos)
         

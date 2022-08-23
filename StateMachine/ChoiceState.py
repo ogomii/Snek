@@ -4,9 +4,6 @@ from config import *
 from .StateInterface import StateInterface, State
 from MousePossitionCalculator import *
 
-lightBlue = (50, 168, 166)
-darkBlue = (50 ,131, 168)
-
 class ChoiceState(StateInterface):
 
     def __init__(self, screen):
@@ -27,15 +24,15 @@ class ChoiceState(StateInterface):
 
     def drawButton1(self, screen, width, height, mousePosition) -> None:
         if isMouseOnHamiltonButton(mousePosition):
-            pg.draw.rect(screen, darkBlue, [width/2 - 280, height/2, 240, 80])
+            pg.draw.rect(screen, Color.darkBlue, [width/2 - 280, height/2, 240, 80])
         else:
-            pg.draw.rect(screen, lightBlue, [width/2 - 280, height/2, 240, 80])
+            pg.draw.rect(screen, Color.lightBlue, [width/2 - 280, height/2, 240, 80])
         screen.blit(self.button1Text, (width/2 - 210, height/2))
 
 
     def drawButton2(self, screen, width, height, mousePosition):
         if isMouseOnPlayButton(mousePosition):
-            pg.draw.rect(screen, darkBlue, [width/2 + 40, height/2, 240, 80])
+            pg.draw.rect(screen, Color.darkBlue, [width/2 + 40, height/2, 240, 80])
         else:
-            pg.draw.rect(screen, lightBlue, [width/2 + 40, height/2, 240, 80])
+            pg.draw.rect(screen, Color.lightBlue, [width/2 + 40, height/2, 240, 80])
         screen.blit(self.button2Text, (width/2 + 100, height/2))
