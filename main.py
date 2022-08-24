@@ -1,4 +1,3 @@
-from re import T
 import pygame as pg
 from config import *
 from StateMachine.StateMachine import StateMachine

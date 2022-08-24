@@ -11,4 +11,4 @@ class Color:
     lightBlue = (50, 168, 166)
     darkBlue = (50 ,131, 168)
     green = (0, 255, 128)
-    black = (10, 10, 10)
+    black = (0, 0, 0)
