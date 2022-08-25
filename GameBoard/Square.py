@@ -36,5 +36,8 @@ class Square:
     def getPos(self):
         return (self.posX, self.posY)
     
+    def isFree(self):
+        return not self.isFilled()
+    
     def isFilled(self):
         return self.appleOnSquare or self.snakeOnSquare

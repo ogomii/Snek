@@ -10,7 +10,8 @@ class GameBoard:
         self.board = [[ Square(self.screen, xCoordinate * 40, yCoordiante * 40) for xCoordinate in range(int(squaresX))] for yCoordiante in range(int(squaresY))]
     
     def placeSnakePart(self, posX, posY):
-        self.board[posX][posY].drawSnakePart()
+        if self.board[posX][posY].isFree():
+            self.board[posX][posY].drawSnakePart()
 
     def update(self):
         for i in range(int(squaresY)):
@@ -27,6 +28,6 @@ class GameBoard:
         emptySquares = []
         for i in range(int(squaresY)):
             for j in range(int(squaresX)):
-                if self.board[i][j].isFilled() == False:
+                if self.board[i][j].isFree():
                     emptySquares.append((i,j))
         return emptySquares
