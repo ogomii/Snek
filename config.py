@@ -12,3 +12,4 @@ class Color:
     darkBlue = (50 ,131, 168)
     green = (0, 255, 128)
     black = (0, 0, 0)
+    red = (255, 0, 0)
