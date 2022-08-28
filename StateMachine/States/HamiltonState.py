@@ -1,7 +1,7 @@
 import pygame as pg
 from config import *
 import logging
-from .StateInterface import StateInterface, State
+from ..StateInterface import StateInterface, State
 from GameBoard.GameBoard import GameBoard
 
 class HamiltonSate(StateInterface):

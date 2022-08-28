@@ -1,19 +1,16 @@
 import pygame as pg
 from config import *
-from StateMachine.StateMachine import StateMachine
-from EventHandler.EventHandler import EventHandler
+from StateMachine.StateMachine import StateMachine, State
 
 
 if __name__ == "__main__":
 
     pg.init()
     stateMachine = StateMachine()
-    eventHandler = EventHandler(stateMachine)
 
-    keepGameRunning = True
-    while keepGameRunning:
+    while stateMachine.getState() != State.shutDown:
 
-        keepGameRunning = eventHandler.handleEvents()
+        stateMachine.handleEvents()
         stateMachine.runState()
 
         pg.display.update()

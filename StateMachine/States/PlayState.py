@@ -1,5 +1,5 @@
 import logging
-from .StateInterface import StateInterface, State
+from ..StateInterface import StateInterface, State
 from GameBoard.GameBoard import GameBoard
 from config import *
 from Timer import Timer

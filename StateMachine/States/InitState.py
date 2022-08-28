@@ -1,6 +1,6 @@
 import pygame as pg
 import logging
-from .StateInterface import StateInterface, State
+from ..StateInterface import StateInterface, State
 from config import *
 
 

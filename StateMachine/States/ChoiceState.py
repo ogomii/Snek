@@ -1,7 +1,7 @@
 import pygame as pg
 import logging
 from config import *
-from .StateInterface import StateInterface, State
+from ..StateInterface import StateInterface, State
 from MousePossitionCalculator import *
 
 class ChoiceState(StateInterface):

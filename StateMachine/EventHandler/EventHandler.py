@@ -1,26 +1,26 @@
 import pygame as pg
-from StateMachine.StateMachine import StateMachine, State
+from ..StateInterface import State
 from MousePossitionCalculator import *
 
 class EventHandler:
     
-    def __init__(self, stateMachine):
-        self.stateMachine = stateMachine
-        pass
+    def __init__(self):
+        self.currentState = State.initState
 
-    def handleEvents(self):
-        keepGameRunning = True
+    def getState(self):
+        return self.currentState
+    
+    def handleEvents(self, currentState):
+        self.currentState = currentState
         for event in pg.event.get():
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                keepGameRunning = False
+                self.currentState = State.shutDown
             if event.type == pg.MOUSEBUTTONDOWN:
                 self.setStateHamiltonOrPlay()
-
-        return keepGameRunning
     
     def setStateHamiltonOrPlay(self):
         mousePosition = pg.mouse.get_pos()
         if isMouseOnHamiltonButton(mousePosition):
-            self.stateMachine.setState(State.hamiltonState)
+            self.currentState = State.hamiltonState
         elif isMouseOnPlayButton(mousePosition):
-            self.stateMachine.setState(State.playState) 
+            self.currentState = State.playState

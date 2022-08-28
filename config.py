@@ -17,3 +17,9 @@ class Color:
     green = (0, 255, 128)
     black = (0, 0, 0)
     red = (255, 0, 0)
+
+class MoveDirection:
+    right = 0
+    left = 1
+    up = 2
+    down = 3

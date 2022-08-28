@@ -6,6 +6,7 @@ class State:
     choiceState = 1
     hamiltonState = 2
     playState = 3
+    shutDown = 4
 
 
 class StateInterface(abc.ABC):
