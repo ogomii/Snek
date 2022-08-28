@@ -7,6 +7,10 @@ size = width, height = 1280, 720
 squaresY: int = height / 40
 squaresX: int = width / 40
 
+class TimeSettings:
+    '''time to elapse in seconds'''
+    snakeMove = 0.5
+
 class Color:
     lightBlue = (50, 168, 166)
     darkBlue = (50 ,131, 168)

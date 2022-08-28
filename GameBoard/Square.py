@@ -28,7 +28,7 @@ class Square:
         self.appleOnSquare = True
         self.snakeOnSquare = False
 
-    def clear(self):
+    def clearSquare(self):
         pg.draw.rect(self.screen, Color.black, [self.posX, self.posY, 40, 40])
         self.snakeOnSquare = False
         self.appleOnSquare = False
