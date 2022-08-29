@@ -12,7 +12,7 @@ class State:
 class StateInterface(abc.ABC):
 
     @abc.abstractmethod
-    def run(self) -> State:
+    def run(self):
         pass
 
     @abc.abstractmethod

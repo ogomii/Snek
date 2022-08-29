@@ -35,7 +35,8 @@ class GameBoard:
                     emptySquares.append((i,j))
         return emptySquares
     
-    def moveSnake(self):
+    def moveSnake(self, moveSnakeDirection):
+        self.moveSnakeDirection = moveSnakeDirection
         self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].clearSquare()
         if self.moveSnakeDirection == MoveDirection.right:
             self._updateSnakeHeadPosition(0, 1)

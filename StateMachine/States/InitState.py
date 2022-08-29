@@ -1,14 +1,16 @@
 import pygame as pg
 import logging
 from ..StateInterface import StateInterface, State
+from ..EventHandler.EventHandler import EventHandler
 from config import *
 
 
 class InitState(StateInterface):
 
-    def __init__(self, screen):
+    def __init__(self, screen, eventHandler):
         logging.info("init state init")
         self.screen = screen
+        self.eventHandler = eventHandler
         #max 60 fps
         clock = pg.time.Clock()
         clock.tick(60)
@@ -30,4 +32,4 @@ class InitState(StateInterface):
         
         self.screen.blit(background, (0, 0))
         pg.display.flip()
-        return State.choiceState
+        self.eventHandler.setState(State.choiceState)

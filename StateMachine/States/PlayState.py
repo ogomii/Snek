@@ -1,14 +1,16 @@
 import logging
 from ..StateInterface import StateInterface, State
 from GameBoard.GameBoard import GameBoard
+from ..EventHandler.EventHandler import EventHandler
 from config import *
 from Timer import Timer
 
 class PlayState(StateInterface):
 
-    def __init__(self,screen):
+    def __init__(self,screen, eventHandler):
         logging.info("play state init")
         self.screen = screen
+        self.eventHandler = eventHandler
         self.board = GameBoard(self.screen)
         self.board.placeSnakePart(squaresY//2, squaresX//2)
         self.board.placeApple()
@@ -22,9 +24,9 @@ class PlayState(StateInterface):
         self.screen.fill((0,0,0))
         self.setUpNextFrame()
         self.board.update()
-        return State.playState
+        self.eventHandler.setState(State.playState)
 
     def setUpNextFrame(self):
         if self.timer.timeElapsed():
-            self.board.moveSnake()
+            self.board.moveSnake(self.eventHandler.getLastDirectionalKey())
         

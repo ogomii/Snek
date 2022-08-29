@@ -14,21 +14,18 @@ class StateMachine:
     def __init__(self):
         screen = pg.display.set_mode(size)
         self.StateObjects = []
-        for stateClass in StateInterface.__subclasses__():
-            self.StateObjects.append(stateClass(screen))
         self.eventHandler = EventHandler()
+        self.currentState = self.eventHandler.getState()
+        for stateClass in StateInterface.__subclasses__():
+            self.StateObjects.append(stateClass(screen, self.eventHandler))
+    
+    def handleEvents(self):
+        self.eventHandler.handleEvents()
         self.currentState = self.eventHandler.getState()
 
     def runState(self):
-        self.currentState = self._getStateObjectToRun().run()
-    
-    def handleEvents(self):
-        self.eventHandler.handleEvents(self.currentState)
-        self.currentState = self.eventHandler.getState()
-    
-    def setState(self, newState):
-        self.currentState = newState
-    
+        self._getStateObjectToRun().run()
+
     def getState(self):
         return self.currentState
 

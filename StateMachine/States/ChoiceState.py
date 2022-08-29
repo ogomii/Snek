@@ -2,13 +2,15 @@ import pygame as pg
 import logging
 from config import *
 from ..StateInterface import StateInterface, State
+from ..EventHandler.EventHandler import EventHandler
 from MousePossitionCalculator import *
 
 class ChoiceState(StateInterface):
 
-    def __init__(self, screen):
+    def __init__(self, screen, eventHandler):
         logging.info("choice state init")
         self.screen = screen
+        self.eventHandler = eventHandler
         self.font = pg.font.SysFont('Arial', 55)
         self.button2Text = self.font.render('PLAY', True, (0,0,120))
         self.button1Text = self.font.render('HCA', True, (0,0,120))
@@ -20,7 +22,7 @@ class ChoiceState(StateInterface):
         mousePosition = pg.mouse.get_pos()
         self.drawButton1(self.screen, width, height, mousePosition)
         self.drawButton2(self.screen, width, height, mousePosition)
-        return State.choiceState                
+        self.eventHandler.setState(State.choiceState)
 
     def drawButton1(self, screen, width, height, mousePosition) -> None:
         if isMouseOnHamiltonButton(mousePosition):
