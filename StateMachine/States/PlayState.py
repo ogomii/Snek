@@ -12,8 +12,6 @@ class PlayState(StateInterface):
         self.screen = screen
         self.eventHandler = eventHandler
         self.board = GameBoard(self.screen)
-        self.board.placeSnakePart(squaresY//2, squaresX//2)
-        self.board.placeApple()
         self.timer = Timer(TimeSettings.snakeMove)
         self.timer.start()
 
@@ -21,12 +19,12 @@ class PlayState(StateInterface):
         return currentState == State.playState
     
     def run(self):
-        self.screen.fill((0,0,0))
-        self.setUpNextFrame()
-        self.board.update()
+        if self.timer.timeElapsed():
+            self.setUpNextFrame()
+            self.board.update()
         self.eventHandler.setState(State.playState)
 
     def setUpNextFrame(self):
-        if self.timer.timeElapsed():
-            self.board.moveSnake(self.eventHandler.getLastDirectionalKey())
+        self.screen.fill((0,0,0))
+        self.board.moveSnake(self.eventHandler.getLastDirectionalKey())
         

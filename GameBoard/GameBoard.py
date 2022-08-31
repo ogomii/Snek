@@ -10,11 +10,13 @@ class GameBoard:
         self.board = [[ Square(self.screen, xCoordinate * 40, yCoordiante * 40) for xCoordinate in range(int(squaresX))] for yCoordiante in range(int(squaresY))]
         self.snakeHeadPosition = [0,0]
         self.moveSnakeDirection = MoveDirection.right
+        self.placeSnakePart(squaresY//2, squaresX//2)
+        self.placeApple()
     
     def placeSnakePart(self, posY, posX):
         if self.board[int(posY)][int(posX)].isFree():
             self.snakeHeadPosition = [posY, posX]
-            self.board[int(posY)][int(posX)].drawSnakePart()
+            self.board[int(posY)][int(posX)].putSnakePart()
 
     def update(self):
         for i in range(int(squaresY)):
@@ -25,7 +27,7 @@ class GameBoard:
         emptySquares = self.gatherEmptySquares()
         if len(emptySquares) != 0:
             chosenSquare = random.randint(0, len(emptySquares))
-            self.board[emptySquares[chosenSquare][0]][emptySquares[chosenSquare][1]].drawApple()
+            self.board[emptySquares[chosenSquare][0]][emptySquares[chosenSquare][1]].putApple()
     
     def gatherEmptySquares(self):
         emptySquares = []
@@ -37,7 +39,11 @@ class GameBoard:
     
     def moveSnake(self, moveSnakeDirection):
         self.moveSnakeDirection = moveSnakeDirection
-        self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].clearSquare()
+        self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].deleteObjectsOnSquare()
+        self._updateSnakePosition()
+        self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].putSnakePart()
+    
+    def _updateSnakePosition(self):
         if self.moveSnakeDirection == MoveDirection.right:
             self._updateSnakeHeadPosition(0, 1)
         elif self.moveSnakeDirection == MoveDirection.left:
@@ -46,8 +52,7 @@ class GameBoard:
             self._updateSnakeHeadPosition(-1, 0)
         elif self.moveSnakeDirection == MoveDirection.down:
             self._updateSnakeHeadPosition(1, 0)
-        self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].drawSnakePart()
-    
+
     def _updateSnakeHeadPosition(self, yAxis, xAxis):
         self.snakeHeadPosition[0] += yAxis
         if self.snakeHeadPosition[0] == squaresY:
