@@ -15,15 +15,19 @@ class EventHandler:
     def __init__(self):
         self.currentState = State.initState
         self.lastDirectionalKey = MoveDirection.right
+
     
     def setState(self, newState):
         self.currentState = newState
     
+
     def getLastDirectionalKey(self):
         return self.lastDirectionalKey
+
     
     def getState(self):
         return self.currentState
+
     
     def handleEvents(self):
         for event in pg.event.get():
@@ -33,6 +37,7 @@ class EventHandler:
                 self.setStateHamiltonOrPlay()
             if self.directionalKeysPressed(event):
                 self.lastDirectionalKey = directionalKeys[event.key]
+
     
     def setStateHamiltonOrPlay(self):
         mousePosition = pg.mouse.get_pos()
@@ -41,6 +46,7 @@ class EventHandler:
         elif isMouseOnPlayButton(mousePosition):
             self.currentState = State.playState
     
+
     def directionalKeysPressed(self, event):
         if event.type == pg.KEYDOWN:
             return event.key == pg.K_UP or event.key == pg.K_DOWN or event.key == pg.K_RIGHT or event.key == pg.K_LEFT

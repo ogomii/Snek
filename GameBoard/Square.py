@@ -11,6 +11,7 @@ class Square:
         self.appleOnSquare = False
         self.snakeOnSquare = False
     
+
     def update(self):
         if self.appleOnSquare:
             self.drawApple()
@@ -18,32 +19,41 @@ class Square:
             self.drawSnakePart()
         return  
     
+
     def putSnakePart(self):
         self.snakeOnSquare = True
         self.appleOnSquare = False
     
+
     def putApple(self):
         self.appleOnSquare = True
         self.snakeOnSquare = False
     
+
     def deleteObjectsOnSquare(self):
         self.snakeOnSquare = False
         self.appleOnSquare = False
 
+
     def drawSnakePart(self):
         pg.draw.rect(self.screen, Color.green, [self.posX, self.posY, 40, 40])
+        
     
     def drawApple(self):
         pg.draw.rect(self.screen, Color.red, [self.posX + 10, self.posY + 10, 20, 20])
 
+
     def clearSquare(self):
         pg.draw.rect(self.screen, Color.black, [self.posX, self.posY, 40, 40])
+
     
     def getPos(self):
         return (self.posX, self.posY)
+
     
     def isAppleOnSquare(self):
         return self.appleOnSquare
+
 
     def isFree(self):
         return not self.isFilled()

@@ -9,7 +9,7 @@ squaresX: int = width / 40
 
 class TimeSettings:
     '''time to elapse in seconds'''
-    snakeMove = 0.2
+    snakeMove = 0.15
 
 class Color:
     lightBlue = (50, 168, 166)
@@ -23,3 +23,4 @@ class MoveDirection:
     left = 1
     up = 2
     down = 3
+    none = 4

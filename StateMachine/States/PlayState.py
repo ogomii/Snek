@@ -15,14 +15,17 @@ class PlayState(StateInterface):
         self.timer = Timer(TimeSettings.snakeMove)
         self.timer.start()
 
+
     def isState(self, currentState) -> bool:
         return currentState == State.playState
     
+
     def run(self):
         if self.timer.timeElapsed():
             self.setUpNextFrame()
             self.board.updateScreen()
         self.eventHandler.setState(State.playState)
+
 
     def setUpNextFrame(self):
         self.screen.fill((0,0,0))

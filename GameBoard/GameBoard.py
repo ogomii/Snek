@@ -1,6 +1,7 @@
 from random import random
 from config import *
 from .Square import Square
+from .SnakeBody import SnakeBody
 import random
 
 class GameBoard:
@@ -8,17 +9,19 @@ class GameBoard:
     def __init__(self, screen):
         self.screen = screen
         self.board = [[ Square(self.screen, xCoordinate * 40, yCoordiante * 40) for xCoordinate in range(int(squaresX))] for yCoordiante in range(int(squaresY))]
-        self.snakeHeadPosition = [0,0]
+        self.snakeBody = []
         self.moveSnakeDirection = MoveDirection.right
         self.placeSnakePart(squaresY//2, squaresX//2)
         self.eatenApplesCounter = 0
         self.appleEaten = False
         self.placeApple()
+
     
     def placeSnakePart(self, posY, posX):
         if self.board[int(posY)][int(posX)].isFree():
-            self.snakeHeadPosition = [posY, posX]
+            self.snakeBody.append(SnakeBody(posY, posX, self.moveSnakeDirection))
             self.board[int(posY)][int(posX)].putSnakePart()
+
 
     def updateScreen(self):
         if self.appleEaten:
@@ -27,12 +30,14 @@ class GameBoard:
         for i in range(int(squaresY)):
             for j in range(int(squaresX)):
                 self.board[i][j].update()
+
     
     def placeApple(self):
         emptySquares = self.gatherEmptySquares()
         if len(emptySquares) != 0:
             chosenSquare = random.randint(0, len(emptySquares))
             self.board[emptySquares[chosenSquare][0]][emptySquares[chosenSquare][1]].putApple()
+
     
     def gatherEmptySquares(self):
         emptySquares = []
@@ -41,35 +46,69 @@ class GameBoard:
                 if self.board[i][j].isFree():
                     emptySquares.append((i,j))
         return emptySquares
+
     
     def moveSnake(self, moveSnakeDirection):
         self.moveSnakeDirection = moveSnakeDirection
-        self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].deleteObjectsOnSquare()
+        self._clearSnakeFromBoard()
         self._updateSnakePosition()
-        if self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].isAppleOnSquare():
-            self.appleEaten = True
-            self.eatenApplesCounter += 1
-        self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].putSnakePart()
+        if self.board[int(self.snakeBody[0].posY)][int(self.snakeBody[0].posX)].isAppleOnSquare():
+            self._eatApple()
+        self._putSnakePartsOnBoard()
+    
+
+    def _clearSnakeFromBoard(self):
+        for snakePartIndex in range(len(self.snakeBody)):
+            self.board[int(self.snakeBody[snakePartIndex].posY)][int(self.snakeBody[snakePartIndex].posX)].deleteObjectsOnSquare()
+    
+
+    def _putSnakePartsOnBoard(self):
+        for snakePartIndex in range(len(self.snakeBody)):
+            self.board[int(self.snakeBody[snakePartIndex].posY)][int(self.snakeBody[snakePartIndex].posX)].putSnakePart()
+    
+    
+    def _eatApple(self):
+        self.appleEaten = True
+        self.eatenApplesCounter += 1
+        snakeTail = self.snakeBody[-1]
+        self.snakeBody.append(SnakeBody(snakeTail.posY, snakeTail.posX, MoveDirection.none))
+
     
     def _updateSnakePosition(self):
-        if self.moveSnakeDirection == MoveDirection.right:
-            self._updateSnakeHeadPosition(0, 1)
-        elif self.moveSnakeDirection == MoveDirection.left:
-            self._updateSnakeHeadPosition(0, -1)
-        elif self.moveSnakeDirection == MoveDirection.up:
-            self._updateSnakeHeadPosition(-1, 0)
-        elif self.moveSnakeDirection == MoveDirection.down:
-            self._updateSnakeHeadPosition(1, 0)
+        self._moveEveryPart()
+        self._updateSnakePartsMovingDirection()
 
-    def _updateSnakeHeadPosition(self, yAxis, xAxis):
-        self.snakeHeadPosition[0] += yAxis
-        if self.snakeHeadPosition[0] == squaresY:
-            self.snakeHeadPosition[0] = 0
-        elif self.snakeHeadPosition[0] == -1:
-            self.snakeHeadPosition[0] = squaresY - 1
-        self.snakeHeadPosition[1] += xAxis
-        if self.snakeHeadPosition[1] == squaresX:
-            self.snakeHeadPosition[1] = 0
-        elif self.snakeHeadPosition[1] == -1:
-            self.snakeHeadPosition[1] = squaresX - 1
+    def _moveEveryPart(self):
+        for snakePartIndex in range(len(self.snakeBody)):
+            if self.snakeBody[snakePartIndex].movingDirection == MoveDirection.right:
+                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], 0, 1)
+            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.left:
+                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], 0, -1)
+            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.up:
+                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], -1, 0)
+            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.down:
+                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], 1, 0)
+            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.none:
+                pass
+
+
+    def _updateSnakePartsMovingDirection(self):
+        newMoveSnakeDirection = self.moveSnakeDirection
+        for snakePartIndex in range(len(self.snakeBody)):
+            snakeDirectionForNextPart = self.snakeBody[snakePartIndex].movingDirection
+            self.snakeBody[snakePartIndex].movingDirection = newMoveSnakeDirection
+            newMoveSnakeDirection = snakeDirectionForNextPart
+
+
+    def _updateSnakePartPosition(self, snakePart, yAxis, xAxis):
+        snakePart.posY += yAxis
+        if snakePart.posY== squaresY:
+            snakePart.posY = 0
+        elif snakePart.posY == -1:
+            snakePart.posY = squaresY - 1
+        snakePart.posX += xAxis
+        if snakePart.posX == squaresX:
+            snakePart.posX = 0
+        elif snakePart.posX == -1:
+            snakePart.posX = squaresX - 1
 
