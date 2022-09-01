@@ -11,6 +11,8 @@ class GameBoard:
         self.snakeHeadPosition = [0,0]
         self.moveSnakeDirection = MoveDirection.right
         self.placeSnakePart(squaresY//2, squaresX//2)
+        self.eatenApplesCounter = 0
+        self.appleEaten = False
         self.placeApple()
     
     def placeSnakePart(self, posY, posX):
@@ -18,7 +20,10 @@ class GameBoard:
             self.snakeHeadPosition = [posY, posX]
             self.board[int(posY)][int(posX)].putSnakePart()
 
-    def update(self):
+    def updateScreen(self):
+        if self.appleEaten:
+            self.placeApple()
+            self.appleEaten = False
         for i in range(int(squaresY)):
             for j in range(int(squaresX)):
                 self.board[i][j].update()
@@ -41,6 +46,9 @@ class GameBoard:
         self.moveSnakeDirection = moveSnakeDirection
         self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].deleteObjectsOnSquare()
         self._updateSnakePosition()
+        if self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].isAppleOnSquare():
+            self.appleEaten = True
+            self.eatenApplesCounter += 1
         self.board[int(self.snakeHeadPosition[0])][int(self.snakeHeadPosition[1])].putSnakePart()
     
     def _updateSnakePosition(self):

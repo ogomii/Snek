@@ -21,7 +21,7 @@ class PlayState(StateInterface):
     def run(self):
         if self.timer.timeElapsed():
             self.setUpNextFrame()
-            self.board.update()
+            self.board.updateScreen()
         self.eventHandler.setState(State.playState)
 
     def setUpNextFrame(self):
