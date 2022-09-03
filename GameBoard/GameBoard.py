@@ -50,6 +50,9 @@ class GameBoard:
     
     def moveSnake(self, moveSnakeDirection):
         self.moveSnakeDirection = moveSnakeDirection
+        if self._snakeWillEatItself():
+            raise SnakeAteItself
+
         self._clearSnakeFromBoard()
         self._updateSnakePosition()
         if self.board[int(self.snakeBody[0].posY)][int(self.snakeBody[0].posX)].isAppleOnSquare():
@@ -80,16 +83,20 @@ class GameBoard:
 
     def _moveEveryPart(self):
         for snakePartIndex in range(len(self.snakeBody)):
-            if self.snakeBody[snakePartIndex].movingDirection == MoveDirection.right:
-                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], 0, 1)
-            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.left:
-                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], 0, -1)
-            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.up:
-                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], -1, 0)
-            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.down:
-                self._updateSnakePartPosition(self.snakeBody[snakePartIndex], 1, 0)
-            elif self.snakeBody[snakePartIndex].movingDirection == MoveDirection.none:
-                pass
+            self._movePart(self.snakeBody[snakePartIndex])
+
+    
+    def _movePart(self, snakePart):
+        if snakePart.movingDirection == MoveDirection.right:
+            self._updateSnakePartPosition(snakePart, 0, 1)
+        elif snakePart.movingDirection == MoveDirection.left:
+            self._updateSnakePartPosition(snakePart, 0, -1)
+        elif snakePart.movingDirection == MoveDirection.up:
+            self._updateSnakePartPosition(snakePart, -1, 0)
+        elif snakePart.movingDirection == MoveDirection.down:
+            self._updateSnakePartPosition(snakePart, 1, 0)
+        elif snakePart.movingDirection == MoveDirection.none:
+            pass
 
 
     def _updateSnakePartsMovingDirection(self):
@@ -111,4 +118,11 @@ class GameBoard:
             snakePart.posX = 0
         elif snakePart.posX == -1:
             snakePart.posX = squaresX - 1
+        
+    def _snakeWillEatItself(self):
+        dummyHead = SnakeBody(self.snakeBody[0].posY, self.snakeBody[0].posX, self.snakeBody[0].movingDirection)
+        self._movePart(dummyHead)
+        if self.board[int(dummyHead.posY)][int(dummyHead.posX)].isSnakeOnSquare():
+            return True
+        return False
 

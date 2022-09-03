@@ -51,6 +51,10 @@ class Square:
         return (self.posX, self.posY)
 
     
+    def isSnakeOnSquare(self):
+        return self.snakeOnSquare
+
+    
     def isAppleOnSquare(self):
         return self.appleOnSquare
 

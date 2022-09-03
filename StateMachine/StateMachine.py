@@ -7,6 +7,7 @@ from .States.InitState import InitState
 from .States.HamiltonState import HamiltonSate
 from .States.ShutDownState import ShutDownState
 from .EventHandler.EventHandler import EventHandler
+from .States.GameOverState import GameOverState
 
 class StateMachine:
 

@@ -21,13 +21,16 @@ class PlayState(StateInterface):
     
 
     def run(self):
+        self.eventHandler.setState(State.playState)
         if self.timer.timeElapsed():
             self.setUpNextFrame()
             self.board.updateScreen()
-        self.eventHandler.setState(State.playState)
 
 
     def setUpNextFrame(self):
         self.screen.fill((0,0,0))
-        self.board.moveSnake(self.eventHandler.getLastDirectionalKey())
+        try:
+            self.board.moveSnake(self.eventHandler.getLastDirectionalKey())
+        except SnakeAteItself:
+            self.eventHandler.setState(State.gameOver)
         

@@ -11,6 +11,7 @@ class ShutDownState(StateInterface):
 
     def run(self):
         self.screen.fill((0,0,0))
+        logging.info("Shutting down")
         self.eventHandler.setState(State.shutDown)
 
     def isState(self, currentState) -> bool:
