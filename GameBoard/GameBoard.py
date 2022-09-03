@@ -11,17 +11,21 @@ class GameBoard:
         self.board = [[ Square(self.screen, xCoordinate * 40, yCoordiante * 40) for xCoordinate in range(int(squaresX))] for yCoordiante in range(int(squaresY))]
         self.snakeBody = []
         self.moveSnakeDirection = MoveDirection.right
-        self.placeSnakePart(squaresY//2, squaresX//2)
+        self.placeSnakePart(squaresY//2, squaresX//2, MoveDirection.right)
         self.eatenApplesCounter = 0
         self.appleEaten = False
         self.placeApple()
 
     
-    def placeSnakePart(self, posY, posX):
+    def placeSnakePart(self, posY, posX, moveSnakeDirection):
         if self.board[int(posY)][int(posX)].isFree():
-            self.snakeBody.append(SnakeBody(posY, posX, self.moveSnakeDirection))
+            self.snakeBody.append(SnakeBody(posY, posX, moveSnakeDirection))
             self.board[int(posY)][int(posX)].putSnakePart()
-
+    
+    def _appendToTail(self):
+        snakeTail = SnakeBody(self.snakeBody[-1].posY, self.snakeBody[-1].posX, self.snakeBody[-1].movingDirection)
+        self._setPartBeforeTail(snakeTail)
+        self.placeSnakePart(snakeTail.posY, snakeTail.posX, snakeTail.movingDirection)
 
     def updateScreen(self):
         if self.appleEaten:
@@ -73,13 +77,12 @@ class GameBoard:
     def _eatApple(self):
         self.appleEaten = True
         self.eatenApplesCounter += 1
-        snakeTail = self.snakeBody[-1]
-        self.snakeBody.append(SnakeBody(snakeTail.posY, snakeTail.posX, MoveDirection.none))
+        self._appendToTail()
 
     
     def _updateSnakePosition(self):
-        self._moveEveryPart()
         self._updateSnakePartsMovingDirection()
+        self._moveEveryPart()
 
     def _moveEveryPart(self):
         for snakePartIndex in range(len(self.snakeBody)):
@@ -126,3 +129,14 @@ class GameBoard:
             return True
         return False
 
+    def _setPartBeforeTail(self, snakePart):
+        if snakePart.movingDirection == MoveDirection.right:
+            self._updateSnakePartPosition(snakePart, 0, -1)
+        elif snakePart.movingDirection == MoveDirection.left:
+            self._updateSnakePartPosition(snakePart, 0, 1)
+        elif snakePart.movingDirection == MoveDirection.up:
+            self._updateSnakePartPosition(snakePart, 1, 0)
+        elif snakePart.movingDirection == MoveDirection.down:
+            self._updateSnakePartPosition(snakePart, -1, 0)
+        elif snakePart.movingDirection == MoveDirection.none:
+            pass
