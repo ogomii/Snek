@@ -34,17 +34,24 @@ class EventHandler:
             if event.type == pg.QUIT or event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 self.currentState = State.shutDown
             if event.type == pg.MOUSEBUTTONDOWN:
-                self.setStateHamiltonOrPlay()
+                self.setNewState()
             if self.directionalKeysPressed(event):
                 self.lastDirectionalKey = directionalKeys[event.key]
 
     
-    def setStateHamiltonOrPlay(self):
+    def setNewState(self):
         mousePosition = pg.mouse.get_pos()
-        if isMouseOnHamiltonButton(mousePosition):
-            self.currentState = State.hamiltonState
-        elif isMouseOnPlayButton(mousePosition):
-            self.currentState = State.playState
+        if self.currentState == State.choiceState:
+            if isMouseOnHamiltonButton(mousePosition):
+                self.currentState = State.hamiltonState
+            elif isMouseOnPlayButton(mousePosition):
+                self.currentState = State.playState
+        elif self.currentState == State.gameOver:
+            if isMouseOnBackToMenuButton(mousePosition):
+                self.currentState = State.initState
+            elif isMoustOnPlayAgainButton(mousePosition):
+                self.currentState = State.playState
+
     
 
     def directionalKeysPressed(self, event):

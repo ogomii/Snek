@@ -17,6 +17,7 @@ class TimeSettings:
 class Color:
     lightBlue = (50, 168, 166)
     darkBlue = (50 ,131, 168)
+    fullBlue = (0, 0, 120)
     green = (0, 255, 128)
     black = (0, 0, 0)
     red = (255, 0, 0)

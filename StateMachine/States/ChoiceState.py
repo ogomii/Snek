@@ -12,29 +12,29 @@ class ChoiceState(StateInterface):
         self.screen = screen
         self.eventHandler = eventHandler
         self.font = pg.font.SysFont('Arial', 55)
-        self.button2Text = self.font.render('PLAY', True, (0,0,120))
-        self.button1Text = self.font.render('HCA', True, (0,0,120))
+        self.button2Text = self.font.render('PLAY', True, Color.fullBlue)
+        self.button1Text = self.font.render('HCA', True, Color.fullBlue)
 
     def isState(self, currentState) -> bool:
         return currentState == State.choiceState
     
     def run(self):
         mousePosition = pg.mouse.get_pos()
-        self.drawButton1(self.screen, width, height, mousePosition)
-        self.drawButton2(self.screen, width, height, mousePosition)
+        self.drawHamiltonButton(width, height, mousePosition)
+        self.drawPlayButton(width, height, mousePosition)
         self.eventHandler.setState(State.choiceState)
 
-    def drawButton1(self, screen, width, height, mousePosition) -> None:
+    def drawHamiltonButton(self, width, height, mousePosition) -> None:
         if isMouseOnHamiltonButton(mousePosition):
-            pg.draw.rect(screen, Color.darkBlue, [width/2 - 280, height/2, 240, 80])
+            pg.draw.rect(self.screen, Color.darkBlue, [width/2 - 280, height/2, 240, 80])
         else:
-            pg.draw.rect(screen, Color.lightBlue, [width/2 - 280, height/2, 240, 80])
-        screen.blit(self.button1Text, (width/2 - 210, height/2))
+            pg.draw.rect(self.screen, Color.lightBlue, [width/2 - 280, height/2, 240, 80])
+        self.screen.blit(self.button1Text, (width/2 - 210, height/2))
 
 
-    def drawButton2(self, screen, width, height, mousePosition):
+    def drawPlayButton(self, width, height, mousePosition):
         if isMouseOnPlayButton(mousePosition):
-            pg.draw.rect(screen, Color.darkBlue, [width/2 + 40, height/2, 240, 80])
+            pg.draw.rect(self.screen, Color.darkBlue, [width/2 + 40, height/2, 240, 80])
         else:
-            pg.draw.rect(screen, Color.lightBlue, [width/2 + 40, height/2, 240, 80])
-        screen.blit(self.button2Text, (width/2 + 100, height/2))
+            pg.draw.rect(self.screen, Color.lightBlue, [width/2 + 40, height/2, 240, 80])
+        self.screen.blit(self.button2Text, (width/2 + 100, height/2))

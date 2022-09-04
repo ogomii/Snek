@@ -54,6 +54,7 @@ class GameBoard:
     
     def moveSnake(self, moveSnakeDirection):
         self.moveSnakeDirection = moveSnakeDirection
+        self._updateSnakePartsMovingDirection()
         if self._snakeWillEatItself():
             raise SnakeAteItself
 
@@ -79,12 +80,8 @@ class GameBoard:
         self.eatenApplesCounter += 1
         self._appendToTail()
 
-    
-    def _updateSnakePosition(self):
-        self._updateSnakePartsMovingDirection()
-        self._moveEveryPart()
 
-    def _moveEveryPart(self):
+    def _updateSnakePosition(self):
         for snakePartIndex in range(len(self.snakeBody)):
             self._movePart(self.snakeBody[snakePartIndex])
 

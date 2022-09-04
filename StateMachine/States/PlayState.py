@@ -32,5 +32,9 @@ class PlayState(StateInterface):
         try:
             self.board.moveSnake(self.eventHandler.getLastDirectionalKey())
         except SnakeAteItself:
+            self.reinitialize()
             self.eventHandler.setState(State.gameOver)
-        
+
+
+    def reinitialize(self):
+        self.__init__(self.screen, self.eventHandler)
