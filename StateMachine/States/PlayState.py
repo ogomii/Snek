@@ -3,7 +3,7 @@ from ..StateInterface import StateInterface, State
 from GameBoard.GameBoard import GameBoard
 from ..EventHandler.EventHandler import EventHandler
 from config import *
-from Timer import Timer
+from Utils.Timer import Timer
 
 class PlayState(StateInterface):
 

@@ -3,7 +3,8 @@ from config import *
 import logging
 from ..StateInterface import StateInterface, State
 from ..EventHandler.EventHandler import EventHandler
-from MousePossitionCalculator import *
+from Utils.MousePossitionCalculator import *
+from Utils.PossitionCalculator import *
 
 class GameOverState(StateInterface):
 
@@ -30,15 +31,15 @@ class GameOverState(StateInterface):
 
     def drawBackToMenuButton(self, width, height, mousePosition) -> None:
         if isMouseOnBackToMenuButton(mousePosition):
-            pg.draw.rect(self.screen, Color.darkBlue, [width/2 - 280, height/3 * 2, 240, 80])
+            pg.draw.rect(self.screen, Color.darkBlue, backToMenuButtonPossition())
         else:
-            pg.draw.rect(self.screen, Color.lightBlue, [width/2 - 280, height/3 * 2, 240, 80])
-        self.screen.blit(self.backToMenuText, (width/2 - 210, height/3 * 2 + 10))
+            pg.draw.rect(self.screen, Color.lightBlue, backToMenuButtonPossition())
+        self.screen.blit(self.backToMenuText, backToMenuTextPossition())
 
 
     def drawPlayAgainButton(self, width, height, mousePosition) -> None:
         if isMoustOnPlayAgainButton(mousePosition):
-            pg.draw.rect(self.screen, Color.darkBlue, [width/2 + 40, height/3 * 2, 240, 80])
+            pg.draw.rect(self.screen, Color.darkBlue, playAgainButtonPossiton())
         else:
-            pg.draw.rect(self.screen, Color.lightBlue, [width/2 + 40, height/3 * 2, 240, 80])
-        self.screen.blit(self.playAgainText, (width/2 + 60, height/3 * 2 + 10))
+            pg.draw.rect(self.screen, Color.lightBlue, playAgainButtonPossiton())
+        self.screen.blit(self.playAgainText, playAgainTextPossition())

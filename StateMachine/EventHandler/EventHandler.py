@@ -1,7 +1,6 @@
-from asyncio import ReadTransport
 import pygame as pg
 from ..StateInterface import State
-from MousePossitionCalculator import *
+from Utils.MousePossitionCalculator import *
 
 directionalKeys = {
     pg.K_RIGHT: MoveDirection.right,

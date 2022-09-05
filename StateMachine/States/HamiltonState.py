@@ -4,7 +4,7 @@ import logging
 from ..StateInterface import StateInterface, State
 from ..EventHandler.EventHandler import EventHandler
 from GameBoard.GameBoard import GameBoard
-from Timer import Timer
+from Utils.Timer import Timer
 
 class HamiltonSate(StateInterface):
 

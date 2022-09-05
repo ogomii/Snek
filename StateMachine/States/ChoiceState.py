@@ -3,7 +3,8 @@ import logging
 from config import *
 from ..StateInterface import StateInterface, State
 from ..EventHandler.EventHandler import EventHandler
-from MousePossitionCalculator import *
+from Utils.MousePossitionCalculator import *
+from Utils.PossitionCalculator import *
 
 class ChoiceState(StateInterface):
 
@@ -26,15 +27,15 @@ class ChoiceState(StateInterface):
 
     def drawHamiltonButton(self, width, height, mousePosition) -> None:
         if isMouseOnHamiltonButton(mousePosition):
-            pg.draw.rect(self.screen, Color.darkBlue, [width/2 - 280, height/2, 240, 80])
+            pg.draw.rect(self.screen, Color.darkBlue, hammiltonButtonPossition())
         else:
-            pg.draw.rect(self.screen, Color.lightBlue, [width/2 - 280, height/2, 240, 80])
-        self.screen.blit(self.button1Text, (width/2 - 210, height/2))
+            pg.draw.rect(self.screen, Color.lightBlue, hammiltonButtonPossition())
+        self.screen.blit(self.button1Text, hammiltonTextPossition())
 
 
     def drawPlayButton(self, width, height, mousePosition):
         if isMouseOnPlayButton(mousePosition):
-            pg.draw.rect(self.screen, Color.darkBlue, [width/2 + 40, height/2, 240, 80])
+            pg.draw.rect(self.screen, Color.darkBlue, playButtonPossition())
         else:
-            pg.draw.rect(self.screen, Color.lightBlue, [width/2 + 40, height/2, 240, 80])
-        self.screen.blit(self.button2Text, (width/2 + 100, height/2))
+            pg.draw.rect(self.screen, Color.lightBlue, playButtonPossition())
+        self.screen.blit(self.button2Text, playTextPossition())
